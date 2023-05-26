@@ -10,5 +10,6 @@ export abstract class CustomerRepository {
     id: string,
     data: UpdateCustomerDto,
   ): Promise<Customer> | Customer;
+  abstract findByMail(email: string): Promise<Customer> | Customer;
   abstract delete(id: string): Promise<void> | void;
 }
