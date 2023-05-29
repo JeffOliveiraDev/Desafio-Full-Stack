@@ -28,10 +28,6 @@ export class CustomerPrismaRepository implements CustomerRepository {
     return plainToInstance(Customer, customers);
   }
 
-  //   findAll(): Customer[] | Promise<Customer[]> {
-  //     return plainToInstance(Customer, this.database);
-  //   }
-
   async findOne(id: string): Promise<Customer> {
     const customer = await this.prisma.customer.findUnique({
       where: { id },
@@ -43,7 +39,7 @@ export class CustomerPrismaRepository implements CustomerRepository {
     const customer = await this.prisma.customer.findUnique({
       where: { email },
     });
-    return plainToInstance(Customer, customer);
+    return customer;
   }
   async update(id: string, data: UpdateCustomerDto): Promise<Customer> {
     const customer = await this.prisma.customer.update({

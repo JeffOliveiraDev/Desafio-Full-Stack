@@ -36,6 +36,14 @@ export class CustomerService {
     return customer;
   }
 
+  async findByMail(email: string) {
+    const customer = await this.customerRepository.findByMail(email);
+    // if (!customer) {
+    //   throw new NotFoundException('Usuário não encontrado');
+    // }
+    return customer;
+  }
+
   async update(id: string, updateCustomerDto: UpdateCustomerDto) {
     const customer = await this.customerRepository.update(
       id,
