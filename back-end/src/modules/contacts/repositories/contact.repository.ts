@@ -3,7 +3,10 @@ import { UpdateContactDto } from '../dto/update-contact.dto';
 import { Contact } from '../entities/contact.entitie';
 
 export abstract class ContactsRepository {
-  abstract create(data: CreateContactDto): Promise<Contact> | Contact;
+  abstract create(
+    data: CreateContactDto,
+    customerId: string,
+  ): Promise<Contact> | Contact;
   abstract findOne(id: string): Promise<Contact | undefined> | Contact;
   abstract findAll(
     contacts: string | undefined,

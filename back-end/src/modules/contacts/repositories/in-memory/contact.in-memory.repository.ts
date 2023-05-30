@@ -9,10 +9,11 @@ import { UpdateContactDto } from '../../dto/update-contact.dto';
 export class ContactInMemoryRepository implements ContactsRepository {
   private database: Contact[] = [];
 
-  async create(data: CreateContactDto): Promise<Contact> {
+  async create(data: CreateContactDto, customerId: string): Promise<Contact> {
     const newContact = new Contact();
     Object.assign(newContact, {
       ...data,
+      customerId: customerId,
     });
 
     this.database.push(newContact);
