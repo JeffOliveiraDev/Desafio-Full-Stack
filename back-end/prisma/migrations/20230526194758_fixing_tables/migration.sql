@@ -1,0 +1,12 @@
+/*
+  Warnings:
+
+  - Added the required column `telefone` to the `contacts` table without a default value. This is not possible if the table is not empty.
+  - Added the required column `telefone` to the `customers` table without a default value. This is not possible if the table is not empty.
+
+*/
+-- AlterTable
+ALTER TABLE "contacts" ADD COLUMN     "telefone" TEXT NOT NULL;
+
+-- AlterTable
+ALTER TABLE "customers" ADD COLUMN     "telefone" TEXT NOT NULL;

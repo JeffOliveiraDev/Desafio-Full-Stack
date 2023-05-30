@@ -1,16 +1,12 @@
-import { Exclude } from 'class-transformer';
 import { randomUUID } from 'crypto';
 
-export class Customer {
-  static newId = 1;
+export class Contact {
   readonly id: string;
   nome: string;
   email: string;
   telefone: string;
   registrado: string;
-
-  @Exclude()
-  senha: string;
+  customerId?: string;
 
   constructor() {
     this.id = randomUUID();
