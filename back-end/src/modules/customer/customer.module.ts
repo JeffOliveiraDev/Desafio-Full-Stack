@@ -2,7 +2,6 @@ import { Module } from '@nestjs/common';
 import { CustomerService } from './customer.service';
 import { CustomerController } from './customer.controller';
 import { CustomerRepository } from './repositories/customer.repository';
-import { CustomerInMemoryRepository } from './repositories/in-memory/customer.in-memory.repository';
 import { PrismaService } from 'src/database/prisma.service';
 import { CustomerPrismaRepository } from './repositories/prisma/customer-prisma.repository';
 
