@@ -1,4 +1,13 @@
-import { useState } from "react";
+import DeleteContactForm from "@/components/deleteContactForm";
+import DeleteCustomerForm from "@/components/deleteCustomerForm";
+import UpdateClientModal from "@/components/modalClientUpdate";
+import UpdateContactModal from "@/components/modalContactUpdate";
+import RegisterCustomerForm from "@/components/registerClientForm";
+import RegisterContactForm from "@/components/registerContactForm";
+import api from "@/services/api";
+import { GetServerSideProps, NextPage } from "next";
+
+import nookies from "nookies";
 
 interface Contact {
   id: number;
@@ -6,104 +15,44 @@ interface Contact {
   telefone: string;
   email: string;
   registrado: string;
+  customerId: string;
 }
 
-const Dashboard = () => {
-  const [contacts, setContacts] = useState<Contact[]>([]);
-  const [nome, setNome] = useState("");
-  const [telefone, setTelefone] = useState("");
-  const [email, setEmail] = useState("");
-  const [registrado, setRegistrado] = useState("");
+interface Customer {
+  id: string;
+  nome: string;
+  email: string;
+  telefone: string;
+  registrado: string;
+}
 
-  const handleCadastroSubmit = (e: { preventDefault: () => void }) => {
-    e.preventDefault();
+interface DashboardProps {
+  contactsList: Contact[];
+  customersList: Customer[];
+}
 
-    const newContact = {
-      id: contacts.length + 1,
-      nome,
-      telefone,
-      email,
-      registrado,
-    };
-
-    const contatinho = { nome: "jonas" };
-
-    setContacts([...contacts, newContact]);
-    setContacts([...contacts, contatinho]);
-
-    setNome("teste");
-    setTelefone("123");
-    setEmail("");
-    setRegistrado("");
-  };
-
+const Dashboard: NextPage<DashboardProps> = ({
+  contactsList,
+  customersList,
+}) => {
   return (
-    <section className="flex min-h-screen">
-      <div className="w-1/2 bg-gray-200 p-8 ">
-        <h2 className="text-3xl">Cadastro de Contato</h2>
-        <form onSubmit={handleCadastroSubmit} className="mt-4 min-h-screen ">
-          <div className="mb-4">
-            <label htmlFor="nome" className="block mb-1">
-              Nome
-            </label>
-            <input
-              type="text"
-              name="nome"
-              className="p-1 rounded"
-              value={nome}
-              onChange={(e) => setNome(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="email" className="block mb-1">
-              Email
-            </label>
-            <input
-              type="text"
-              name="email"
-              className="p-1 rounded"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="telefone" className="block mb-1">
-              Telefone
-            </label>
-            <input
-              type="text"
-              name="telefone"
-              className="p-1 rounded"
-              value={telefone}
-              onChange={(e) => setTelefone(e.target.value)}
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label htmlFor="registrado" className="block mb-1">
-              Registrado
-            </label>
-            <input
-              type="text"
-              name="registrado"
-              className="p-1 rounded"
-              placeholder="10/02/2021"
-              value={registrado}
-              onChange={(e) => setRegistrado(e.target.value)}
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="bg-blue-500 text-white rounded px-4 py-2"
-          >
-            Cadastrar
-          </button>
-        </form>
+    <section className=" flex min-h-screen min-w-max">
+      <div className="w 0.5/3 bg-gray-200 p-8 ">
+        <UpdateClientModal />
+        <span className="p-1"> </span>
+
+        <UpdateContactModal />
+        <span className="p-1"></span>
+        <RegisterCustomerForm />
+        <span className="p-1"></span>
+        <RegisterContactForm />
+        <span className="p-1"></span>
+        <DeleteContactForm />
+        <span className="p-1"></span>
+        <DeleteCustomerForm />
       </div>
-      <div className="w-1/2 bg-gray-100 p-8">
+
+      <div className="w-2.5/3 bg-gray-100 p-8">
         <h2 className="text-3xl">Lista de Contatos</h2>
         <table className="w-full mt-4">
           <thead>
@@ -113,23 +62,68 @@ const Dashboard = () => {
               <th className="border px-4 py-2">Email</th>
               <th className="border px-4 py-2">Telefone</th>
               <th className="border px-4 py-2">Registrado</th>
+              <th className="border px-4 py-2">CustomerId</th>
             </tr>
           </thead>
           <tbody>
-            {contacts.map((contact) => (
+            {contactsList.map((contact) => (
               <tr key={contact.id}>
-                <td className="border px-4 py-2">{contact.id}</td>
+                <td className="border px-4= py-2">{contact.id}</td>
                 <td className="border px-4 py-2">{contact.nome}</td>
                 <td className="border px-4 py-2">{contact.email}</td>
                 <td className="border px-4 py-2">{contact.telefone}</td>
                 <td className="border px-4 py-2">{contact.registrado}</td>
+                <td className="border px-4 py-2">{contact.customerId}</td>
               </tr>
             ))}
           </tbody>
         </table>
+        <div className="w-2.5/3 bg-gray-100 p-8">
+          <h2 className="text-3xl">Lista de Clientes</h2>
+          <table className="w-full mt-4">
+            <thead>
+              <tr>
+                <th className="border px-3 py-2">ID</th>
+                <th className="border px-4 py-2">Nome</th>
+                <th className="border px-4 py-2">Email</th>
+                <th className="border px-4 py-2">Telefone</th>
+                <th className="border px-4 py-2">Registrado</th>
+              </tr>
+            </thead>
+            <tbody>
+              {customersList.map((customer) => (
+                <tr key={customer.id}>
+                  <td className="border px-4 py-2">{customer.id}</td>
+                  <td className="border px-4 py-2">{customer.nome}</td>
+                  <td className="border px-4 py-2">{customer.email}</td>
+                  <td className="border px-4 py-2">{customer.telefone}</td>
+                  <td className="border px-4 py-2">{customer.registrado}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </section>
   );
 };
 
 export default Dashboard;
+
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const response = await api.get<Contact[]>("/contacts");
+  const cookies = nookies.get(ctx);
+
+  const customersResponse = await api.get<Customer[]>("/customer", {
+    headers: {
+      Authorization: `Bearer ${cookies["user.token"]}`,
+    },
+  });
+
+  return {
+    props: {
+      contactsList: response.data,
+      customersList: customersResponse.data,
+    },
+  };
+};

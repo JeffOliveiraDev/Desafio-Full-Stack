@@ -2,7 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-gray-900;
-  color: black;
+@layer components {
+  body {
+    @apply bg-gray-900;
+    color: black;
+  }
+
+  .btn-register {
+    @apply bg-black;
+  }
 }
