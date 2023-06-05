@@ -4,6 +4,10 @@ Consiste em criar um pequeno cadastro de clientes com vínculo de contatos, depo
 
 # Documentação:
 
-A documentação foi realizada utilizando Swagger, para acessa-lá utilize o link:
+A documentação foi realizada utilizando Swagger, para acessa-lá utilize o link após rodar a aplicação:
 
-localhost/doc
+http://localhost:3001/doc
+
+Também é possível visualizar a lista de contatos e clientes através do Prisma Studio, dentro do VsCode utilizar o comando:
+
+npx prisma studio
