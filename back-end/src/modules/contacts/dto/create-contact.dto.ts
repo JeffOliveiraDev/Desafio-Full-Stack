@@ -25,4 +25,9 @@ export class CreateContactDto {
     default: '10/02/2021',
   })
   registrado: string;
+
+  @IsString()
+  @IsOptional()
+  @ApiProperty()
+  customerId: string;
 }

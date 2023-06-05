@@ -10,12 +10,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id         String @id
+  nome       String
+  email      String @unique
+  senha      String
+  telefone   String
+
+  @@map("user")
+}
+
 model Customer {
   id         String @id
   nome       String
   email      String @unique
   registrado String
-  senha      String
   telefone   String
   Contact Contact[]
 

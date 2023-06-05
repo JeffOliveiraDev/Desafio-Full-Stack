@@ -4,7 +4,7 @@ import { LocalAuthGuard } from './local-auth.guard';
 import { ApiTags } from '@nestjs/swagger';
 import { LoginDTO } from './dto/login.dto';
 
-interface ICustomerLogin {
+interface IUserLogin {
   email: string;
   senha: string;
 }
@@ -16,7 +16,7 @@ export class AuthController {
 
   @Post('')
   @UseGuards(LocalAuthGuard)
-  async login(@Body() customer: LoginDTO) {
-    return this.authService.login(customer.email);
+  async login(@Body() user: LoginDTO) {
+    return this.authService.login(user.email);
   }
 }

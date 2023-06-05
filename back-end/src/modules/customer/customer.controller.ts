@@ -40,8 +40,6 @@ export class CustomerController {
   }
 
   @Patch(':id')
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   update(
     @Param('id') id: string,
     @Body() updateCustomerDto: UpdateCustomerDto,
