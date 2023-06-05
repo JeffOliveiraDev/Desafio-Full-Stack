@@ -10,7 +10,7 @@ import { plainToInstance } from 'class-transformer';
 export class ContactsPrismaRepository implements ContactsRepository {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateContactDto, customerId: string): Promise<Contact> {
+  async create(data: CreateContactDto): Promise<Contact> {
     const contact = new Contact();
     Object.assign(contact, { ...data });
     const newContact = await this.prisma.contact.create({
@@ -20,7 +20,7 @@ export class ContactsPrismaRepository implements ContactsRepository {
         email: contact.email,
         registrado: contact.registrado,
         telefone: contact.telefone,
-        customerId: customerId,
+        customerId: contact.customerId,
       },
     });
 

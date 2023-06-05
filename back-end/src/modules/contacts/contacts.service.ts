@@ -7,11 +7,8 @@ import { UpdateContactDto } from './dto/update-contact.dto';
 export class ContactsService {
   constructor(private contactRepository: ContactsRepository) {}
 
-  async create(createContactDto: CreateContactDto, customerId: string) {
-    const contact = await this.contactRepository.create(
-      createContactDto,
-      customerId,
-    );
+  async create(createContactDto: CreateContactDto) {
+    const contact = await this.contactRepository.create(createContactDto);
 
     return contact;
   }

@@ -1,31 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { CustomerService } from '../customer/customer.service';
 import { compare } from 'bcryptjs';
 import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class AuthService {
   constructor(
-    private customerService: CustomerService,
+    private userService: UsersService,
     private jwtService: JwtService,
   ) {}
 
-  async validateCustomer(customerEmail: string, customerPassword: string) {
-    const customer = await this.customerService.findByMail(customerEmail);
+  async validateUser(userEmail: string, userPassword: string) {
+    const user = await this.userService.findByMail(userEmail);
 
-    if (customer) {
-      const passwordMatch = await compare(customerPassword, customer.senha);
+    if (user) {
+      const passwordMatch = await compare(userPassword, user.senha);
       if (passwordMatch) {
-        return { email: customer.email };
+        return { email: user.email };
       }
       return null;
     }
   }
 
   async login(email: string) {
-    const customer = await this.customerService.findByMail(email);
+    const user = await this.userService.findByMail(email);
     return {
-      token: this.jwtService.sign({ email }, { subject: customer.id }),
+      token: this.jwtService.sign({ email }, { subject: user.id }),
     };
   }
 }

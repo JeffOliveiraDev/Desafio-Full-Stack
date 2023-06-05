@@ -34,12 +34,11 @@ export class CreateCustomerDto {
   })
   registrado: string;
 
-  @IsString()
-  @MinLength(8)
-  @ApiProperty()
-  @Transform(({ value }: { value: string }) => hashSync(value, 10), {
-    groups: ['transform'],
-  })
-  senha: string;
+  // @IsString()
+  // @MinLength(8)
+  // @ApiProperty()
+  // @Transform(({ value }: { value: string }) => hashSync(value, 10), {
+  //   groups: ['transform'],
+  // })
+  // senha: string;
 }
-// data transfer object, transferência entre camadas
