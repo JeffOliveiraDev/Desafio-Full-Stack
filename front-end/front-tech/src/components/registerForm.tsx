@@ -19,7 +19,6 @@ const RegisterForm = () => {
 
   const onFormSubmit = (formData: UserData) => {
     registerUser(formData);
-    console.log(formData);
   };
 
   return (

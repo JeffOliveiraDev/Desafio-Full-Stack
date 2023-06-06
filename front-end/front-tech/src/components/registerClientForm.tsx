@@ -22,7 +22,6 @@ const RegisterCustomerForm = () => {
   const { registerCustomer } = useAuth();
 
   const onFormSubmit = (formData: CustomertData) => {
-    console.log(formData);
     registerCustomer(formData);
   };
 
@@ -88,8 +87,7 @@ const RegisterCustomerForm = () => {
             </div>
             <button
               type="submit"
-              className="bg-blue-500 text-white rounded px-4 py-2"
-              onClick={() => console.log("oi")}
+              className="bg-green-400 text-white rounded px-4 py-2"
             >
               Cadastrar
             </button>
