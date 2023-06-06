@@ -5,7 +5,7 @@ import { useRouter } from "next/router";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const RegisterContactForm = () => {
+const RegisterContactForm = ({ customerList }: any) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -23,7 +23,6 @@ const RegisterContactForm = () => {
 
   const onFormSubmit = (formData: ContactData) => {
     registerContact(formData);
-    console.log(formData);
   };
 
   return (
@@ -87,20 +86,24 @@ const RegisterContactForm = () => {
               />
             </div>
             <div className="mb-4">
-              <label htmlFor="registrado" className="block mb-1">
+              <label htmlFor="customerId" className="block mb-1">
                 ClienteId
               </label>
-              <input
-                type="text"
+              <select
                 className="p-1 rounded"
-                placeholder="Id do cliente relacionado"
                 {...register("customerId")}
                 required
-              />
+              >
+                {customerList.map((contact: any) => (
+                  <option key={contact.id} value={contact.id}>
+                    {contact.nome}
+                  </option>
+                ))}
+              </select>
             </div>
             <button
               type="submit"
-              className="bg-blue-500 text-white rounded px-4 py-2"
+              className="bg-green-400 text-white rounded px-4 py-2"
             >
               Cadastrar
             </button>

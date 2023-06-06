@@ -9,7 +9,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const UpdateContactModal = () => {
+const UpdateContactModal = ({ contactsToUpdate }: any) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -27,7 +27,6 @@ const UpdateContactModal = () => {
   const { updateContact } = useAuth();
 
   const onFormSubmit = (formData: UpdateContactData) => {
-    console.log(formData);
     updateContact(formData);
   };
 
@@ -47,15 +46,16 @@ const UpdateContactModal = () => {
             className="mt-1 pt1 max-h-screen  "
           >
             <div className="mb-4">
-              <label htmlFor="id" className="block mb-1">
-                Id
+              <label htmlFor="clienteId" className="block mb-1">
+                Selecione o Contato a ser Atualizado
               </label>
-              <input
-                type="text"
-                className="p-1 rounded"
-                {...register("id")}
-                required
-              />
+              <select className="p-1 rounded" {...register("id")} required>
+                {contactsToUpdate.map((contact: any) => (
+                  <option key={contact.id} value={contact.id}>
+                    {contact.nome}
+                  </option>
+                ))}
+              </select>
               <label htmlFor="nome" className="block mb-1">
                 Nome
               </label>
@@ -96,22 +96,12 @@ const UpdateContactModal = () => {
                 {...register("registrado")}
               />
             </div>
-            <div className="mb-4">
-              <label htmlFor="clienteId" className="block mb-1">
-                Id do Cliente
-              </label>
-              <input
-                type="text"
-                className="p-1 rounded"
-                placeholder="Id"
-                {...register("clienteId")}
-              />
-            </div>
+
             <button
               type="submit"
-              className="bg-blue-500 text-white rounded px-4 py-2"
+              className="bg-green-400 text-white rounded px-4 py-2"
             >
-              Cadastrar
+              Atualizar
             </button>
             <button
               onClick={handleCloseModal}
