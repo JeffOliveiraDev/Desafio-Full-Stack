@@ -63,7 +63,7 @@ export const AuthProvider = ({ children }: Props) => {
 
       .catch((err) => {
         console.log(err);
-        toast.error(`${err}`, {
+        toast.error(`${err.response.data.message}`, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -103,8 +103,7 @@ export const AuthProvider = ({ children }: Props) => {
       })
 
       .catch((err) => {
-        console.log(err);
-        toast.error(`${err}`, {
+        toast.error(`${err.response.data.message}`, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -143,8 +142,7 @@ export const AuthProvider = ({ children }: Props) => {
         }, 1000);
       })
       .catch((err) => {
-        console.log(err);
-        toast.error(`${err}`, {
+        toast.error(`${err.response.data.message}`, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -160,7 +158,7 @@ export const AuthProvider = ({ children }: Props) => {
   const deleteContact = (deleteContactData: DeleteContactData) => {
     const cookies = nookies.get();
     const token = cookies["user.token"];
-    console.log(deleteContactData.id);
+
     api
       .delete(`/contacts/${deleteContactData.id}`, {
         headers: {
@@ -185,7 +183,7 @@ export const AuthProvider = ({ children }: Props) => {
 
       .catch((err) => {
         console.log(err);
-        toast.error(`${err}`, {
+        toast.error(`${err.response.data.message}`, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -212,10 +210,13 @@ export const AuthProvider = ({ children }: Props) => {
           progress: undefined,
           theme: "light",
         });
+        setTimeout(() => {
+          router.reload();
+        }, 1000);
       })
       .catch((err) => {
         console.log(err);
-        toast.error(`${err}`, {
+        toast.error(`${err.response.data.message}`, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -256,7 +257,7 @@ export const AuthProvider = ({ children }: Props) => {
 
       .catch((err) => {
         console.log(err);
-        toast.error(`${err}`, {
+        toast.error(`${err.response.data.message}`, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -287,7 +288,7 @@ export const AuthProvider = ({ children }: Props) => {
       })
       .catch((err) => {
         console.log(err);
-        toast.error(`${err}`, {
+        toast.error(`${err.response.data.message}`, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,
@@ -304,7 +305,6 @@ export const AuthProvider = ({ children }: Props) => {
     api
       .post("/login", loginData)
       .then((response) => {
-        console.log(response.data.token);
         setCookie(null, "user.token", response.data.token, {
           maxAge: 60 * 60,
           path: "/dashboard",
@@ -322,10 +322,14 @@ export const AuthProvider = ({ children }: Props) => {
           theme: "light",
         });
         router.push("/dashboard");
+
+        const handleRedirect = () => {
+          router.push("/");
+        };
       })
       .catch((err) => {
         console.log(err);
-        toast.error(`${err}`, {
+        toast.error(`${err.response.data.message}`, {
           position: "top-right",
           autoClose: 3000,
           hideProgressBar: false,

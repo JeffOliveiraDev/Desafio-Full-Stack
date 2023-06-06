@@ -3,10 +3,6 @@ import api from "@/services/api";
 import { GetServerSideProps } from "next";
 import { useRouter } from "next/router";
 
-// interface DashboardProps {
-//   contacts: Contact[];
-// }
-
 export default function Home() {
   return (
     <section

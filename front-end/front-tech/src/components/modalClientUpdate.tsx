@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-const UpdateClientModal = () => {
+const UpdateClientModal = ({ customerToUpdate }: any) => {
   const [showModal, setShowModal] = useState(false);
 
   const handleOpenModal = () => {
@@ -25,7 +25,6 @@ const UpdateClientModal = () => {
   const { updateCustomer } = useAuth();
 
   const onFormSubmit = (formData: UpdateCustomerData) => {
-    console.log(formData);
     updateCustomer(formData);
   };
 
@@ -45,15 +44,16 @@ const UpdateClientModal = () => {
             className="mt-1 pt1 max-h-screen  "
           >
             <div className="mb-4">
-              <label htmlFor="id" className="block mb-1">
-                Id
+              <label htmlFor="clienteId" className="block mb-1">
+                Selecione o Cliente a ser Atualizado
               </label>
-              <input
-                type="text"
-                className="p-1 rounded"
-                {...register("id")}
-                required
-              />
+              <select className="p-1 rounded" {...register("id")} required>
+                {customerToUpdate.map((customer: any) => (
+                  <option key={customer.id} value={customer.id}>
+                    {customer.nome}
+                  </option>
+                ))}
+              </select>
               <label htmlFor="nome" className="block mb-1">
                 Nome
               </label>
@@ -96,9 +96,9 @@ const UpdateClientModal = () => {
             </div>
             <button
               type="submit"
-              className="bg-blue-500 text-white rounded px-4 py-2"
+              className="bg-green-400 text-white rounded px-4 py-2"
             >
-              Cadastrar
+              Atualizar
             </button>
             <button
               onClick={handleCloseModal}
