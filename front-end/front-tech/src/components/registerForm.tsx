@@ -47,11 +47,14 @@ const RegisterForm = () => {
         />
       </div>
       <div className={"p-1 flex flex-col gap-2"}>
-        <label htmlFor="telefone">Telefone</label>
+        <label htmlFor="telefone" placeholder="teste@mail.com">
+          Telefone
+        </label>
         <input
           type="text"
           className={"p-1 rounded text-black "}
           required
+          placeholder="1199821221"
           {...register("telefone")}
         />
       </div>
@@ -71,6 +74,7 @@ const RegisterForm = () => {
           type="text"
           className={"p-1 rounded text-black "}
           required
+          placeholder="mín 8 dígitos"
           {...register("senha")}
         />
       </div>
